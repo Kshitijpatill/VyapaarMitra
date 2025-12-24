@@ -137,6 +137,10 @@
             <a class="navbar-brand" href="#">
                 <i class="bi bi-robot me-2"></i>Vyapaar Mitra
             </a>
+            <div class="d-flex align-items-center text-white" style="cursor: pointer;" onclick="changeName()">
+                <i class="bi bi-person-circle me-2 fs-5"></i>
+                <span id="navUserName" class="fw-bold">Guest</span>
+            </div>
         </div>
     </nav>
 
@@ -203,6 +207,31 @@
     </div>
 
     <script>
+        // --- NEW: User Name Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedName = localStorage.getItem('vyapaarUserName');
+            if (storedName) {
+                document.getElementById('navUserName').innerText = storedName;
+            } else {
+                askForName();
+            }
+        });
+
+        function askForName() {
+            let name = prompt("Namaste! What is your name (or Business Name)?");
+            if (name && name.trim() !== "") {
+                localStorage.setItem('vyapaarUserName', name.trim());
+                document.getElementById('navUserName').innerText = name.trim();
+            } else {
+                if (!localStorage.getItem('vyapaarUserName')) {
+                    localStorage.setItem('vyapaarUserName', "Owner");
+                    document.getElementById('navUserName').innerText = "Owner";
+                }
+            }
+        }
+
+        function changeName() { askForName(); }
+
         const generateBtn = document.getElementById('generateBtn');
         const userInput = document.getElementById('userInput');
         const outputCard = document.getElementById('outputCard');
@@ -276,7 +305,10 @@
                 const response = await fetch('/.netlify/functions/generate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: userText })
+                    body: JSON.stringify({
+                        prompt: userText,
+                        userName: localStorage.getItem('vyapaarUserName') || "Owner"
+                    })
                 });
 
                 const data = await response.json();
