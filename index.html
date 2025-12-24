@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vyapaar Mitra - AI Assistant</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
+
+        .output-area {
+            min-height: 100px;
+            background-color: #ffffff;
+            border-radius: 8px;
+        }
+
+        #outputContent p {
+            margin-bottom: 0.8rem;
+        }
+
+        #outputContent ul {
+            padding-left: 1.2rem;
+        }
+
+        /* --- Quick Access Prompts Styling --- */
+        .prompt-scroll-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 2px;
+            scrollbar-width: none;
+            /* Hide scrollbar Firefox */
+        }
+
+        .prompt-scroll-container::-webkit-scrollbar {
+            display: none;
+            /* Hide scrollbar Chrome/Safari */
+        }
+
+        .prompt-chip {
+            white-space: nowrap;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .prompt-chip:hover {
+            background-color: #e7f1ff;
+            border-color: #0d6efd;
+            color: #0d6efd;
+            transform: translateY(-2px);
+        }
+
+        .prompt-chip i {
+            color: #0d6efd;
+            font-size: 1.1em;
+        }
+
+        /* Mic Button */
+        .mic-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .mic-btn:hover {
+            background-color: #ffebee;
+            border-color: #dc3545;
+        }
+
+        .mic-active {
+            animation: pulse 1.5s infinite;
+            background-color: #dc3545;
+            color: white !important;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-robot me-2"></i>Vyapaar Mitra
+            </a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 800px;">
+        <div class="card p-4 mb-4">
+            <div class="mb-3 position-relative">
+                <label for="userInput" class="form-label fw-bold text-secondary small text-uppercase">Describe your
+                    business scenario</label>
+
+                <textarea class="form-control bg-light" id="userInput" rows="4"
+                    placeholder="Type here or select a quick prompt below..."></textarea>
+
+                <button class="mic-btn shadow-sm" id="micBtn" onclick="toggleListening()" title="Speak Input">
+                    <i class="bi bi-mic-fill text-danger"></i>
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-muted small fw-bold">Quick Actions (Click to fill)</label>
+                <div class="prompt-scroll-container">
+                    <div class="prompt-chip" onclick="fillInput('Write a catchy WhatsApp sale message for ')">
+                        <i class="bi bi-whatsapp"></i> Sale Post
+                    </div>
+                    <div class="prompt-chip"
+                        onclick="fillInput('Draft a polite message asking for pending payment of Rs ')">
+                        <i class="bi bi-currency-rupee"></i> Payment Reminder
+                    </div>
+                    <div class="prompt-chip"
+                        onclick="fillInput('Draft a polite professional reply to this angry customer: ')">
+                        <i class="bi bi-chat-quote-fill"></i> Handle Complaint
+                    </div>
+                    <div class="prompt-chip" onclick="fillInput('Analyze these sales numbers and give me insights: ')">
+                        <i class="bi bi-graph-up-arrow"></i> Analyze Data
+                    </div>
+                    <div class="prompt-chip" onclick="fillInput('Write a short festival greeting message for ')">
+                        <i class="bi bi-gift-fill"></i> Festival Wish
+                    </div>
+                </div>
+            </div>
+
+            <button id="generateBtn" class="btn btn-primary btn-lg w-100 shadow-sm fw-bold">
+                <i class="bi bi-stars me-2"></i>Generate Advice
+            </button>
+        </div>
+
+        <div id="loadingSpinner" class="text-center my-5 d-none">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted animate-pulse">Consulting Vyapaar Mitra...</p>
+        </div>
+
+        <div id="outputCard" class="card d-none">
+            <div class="card-header bg-success text-white fw-bold d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-check-circle me-2"></i>Suggestion</span>
+                <button class="btn btn-sm btn-light text-success fw-bold border-0" onclick="copyResult()">
+                    <i class="bi bi-copy"></i> Copy
+                </button>
+            </div>
+            <div class="card-body output-area">
+                <div id="outputContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const generateBtn = document.getElementById('generateBtn');
+        const userInput = document.getElementById('userInput');
+        const outputCard = document.getElementById('outputCard');
+        const outputContent = document.getElementById('outputContent');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const micBtn = document.getElementById('micBtn');
+
+        // --- UI Helper Functions ---
+
+        // 1. Fill Input from Chips
+        function fillInput(text) {
+            userInput.value = text;
+            userInput.focus();
+            // Optional: Scroll to top of input
+            userInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // 2. Copy Result
+        function copyResult() {
+            const text = outputContent.innerText;
+            navigator.clipboard.writeText(text);
+            alert("Copied to clipboard!");
+        }
+
+        // 3. Voice Input Logic
+        let recognition;
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-IN';
+
+            recognition.onstart = () => micBtn.classList.add('mic-active');
+            recognition.onend = () => micBtn.classList.remove('mic-active');
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                const currentText = userInput.value;
+                userInput.value = currentText ? currentText + " " + transcript : transcript;
+            };
+        } else {
+            micBtn.style.display = 'none';
+        }
+
+        function toggleListening() {
+            if (recognition) {
+                try { recognition.start(); } catch (e) { recognition.stop(); }
+            } else {
+                alert("Voice input not supported in this browser.");
+            }
+        }
+
+        // --- Backend Logic (Preserved) ---
+
+        generateBtn.addEventListener('click', async () => {
+            const userText = userInput.value.trim();
+
+            if (!userText) {
+                alert("Please describe your scenario first.");
+                return;
+            }
+
+            // UI State: Loading
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analyzing...';
+            loadingSpinner.classList.remove('d-none');
+            outputCard.classList.add('d-none');
+            outputContent.innerHTML = '';
+
+            try {
+                // Call Netlify Function
+                const response = await fetch('/.netlify/functions/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: userText })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.error || "Server Error");
+
+                // Render Output
+                outputContent.innerHTML = marked.parse(data.output);
+
+                // UI State: Success
+                loadingSpinner.classList.add('d-none');
+                outputCard.classList.remove('d-none');
+
+            } catch (error) {
+                console.error("Error:", error);
+                loadingSpinner.classList.add('d-none');
+                outputCard.classList.remove('d-none');
+                outputContent.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<i class="bi bi-stars me-2"></i>Generate Advice';
+            }
+        });
+    </script>
+</body>
+
+</html>
