@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Megaphone, Zap, BarChart3, User, MessageSquare } from "lucide-react"; // Added icons for better UX
+import logo from "../assets/logo.png";
 
 function Navbar() {
   return (
@@ -11,7 +12,7 @@ function Navbar() {
           to="/"
         >
           <img
-            src="./src/assets/logo.png"
+            src={logo}
             alt="Vyapaar Mitra Logo"
             style={{ width: "32px", height: "32px", objectFit: "contain" }}
           />

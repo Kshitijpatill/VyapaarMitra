@@ -1,38 +1,91 @@
-# 🤝 Vyapaar Mitra (Business Friend)
+🤝 Vyapaar Mitra (Your AI Business Friend)
+An All-in-One AI-Powered Growth Suite for India's MSMEs.
 
-**An AI-Powered Smart Business Assistant for Indian MSMEs.**
+Vyapaar Mitra is a localized AI copilot designed to bridge the digital divide for Indian shopkeepers, freelancers, and small business owners. It transforms complex business operations—like data analysis, professional marketing, and customer engagement—into simple, one-click actions delivered through a relatable Hinglish interface.
 
-Vyapaar Mitra is a "Zero-Touch" AI copilot designed to help Indian shopkeepers, freelancers, and small business owners manage their daily operations. It bridges the gap between complex AI technology and non-technical users by offering a simple, mobile-first interface that understands **Hinglish**, business context, and voice commands.
+🚀 Key Modules & Features
+1. 🗣️ AI Assistant (Agent Mitra)
+A multimodal assistant that understands the way Indian business owners work.
 
-![Project Status](https://img.shields.io/badge/Status-Prototype-orange)
-![Tech Stack](https://img.shields.io/badge/Stack-HTML%20%7C%20Netlify%20Functions%20%7C%20Gemini%20AI-blue)
+Voice-First Interaction: Integrated Web Speech API for hands-free queries in Indian English and Hinglish.
 
-## 🚀 Key Features
+Multimodal Support: Upload images of bills, handwritten notes, or PDF documents for instant AI analysis.
 
-* **🗣️ Voice-First Interface:** Built-in voice recognition optimized for Indian English accents, allowing users to speak instead of type.
-* **🧠 4 Intelligent Modes (Auto-Detect):**
-    * **📢 Marketing Mode:** Generates WhatsApp/Instagram posts with emojis, hashtags, and price anchoring. Includes DPDP compliance (Opt-out footers).
-    * **📊 Data Analyst Mode:** Turns messy text/numbers into clear insights (Total Revenue, Top Items) and flags "Credit Gaps" or "Low Profit Margins".
-    * **💬 Customer Reply Mode:** Drafts professional responses to angry or inquiring customers (Formal vs. Friendly options).
-    * **✅ Task Planner Mode:** Organizes random thoughts into a prioritized To-Do list.
-* **⚡ Quick Actions:** One-tap "Chips" for common tasks like "Payment Reminder", "Festival Wish", or "Handle Complaint".
-* **🇮🇳 Localized Context:** Specifically tuned to speak "Hinglish" (Hindi + English) and use respectful Indian business terminology ("Boss", "Sir/Ma'am").
-* **🔒 Secure Architecture:** API keys are hidden server-side using Netlify Functions, ensuring security.
+Mode Auto-Detection: Automatically switches between Marketing, Data Analyst, Customer Reply, and Task Planner modes based on user intent.
 
-## 🛠️ Tech Stack
+2. 🎨 AI Ad Studio
+Instant professional branding for local shops without the cost of a designer.
 
-* **Frontend:** HTML5, CSS3 (Bootstrap 5), Client-side JavaScript.
-* **Backend:** Node.js (Netlify Serverless Functions).
-* **AI Model:** Google Gemini API (Flash Model).
-* **Tools:** `marked.js` (Markdown rendering), Web Speech API.
+One-Click Ad Gen: Describe a product to receive a professional Hinglish headline, persuasive tagline, and call-to-action.
 
-## 📂 Project Structure
+AI Image Generation: Uses advanced prompt engineering to generate culturally relevant, high-quality images (e.g., "warm Indian sunlight," "marigold decorations").
 
-```bash
-VyapaarMitra/
-├── index.html                 # Main frontend UI (Chat interface)
-├── package.json               # Dependencies (@google/generative-ai)
-├── netlify/
-│   └── functions/
-│       └── generate.js        # Serverless backend (Handles API calls securely)
-└── README.md                  # Project documentation
+Social Export: Download ads as PNGs or share directly to WhatsApp, Instagram, and Facebook.
+
+3. 📈 Smart Analytics Dashboard
+Turn messy data into growth strategies.
+
+Real-time Revenue Tracking: Visualize sales trends through interactive area charts.
+
+Smart Import: Upload a CSV, text file, or photo of a sales register to automatically populate your dashboard via AI.
+
+Profit Trap Alerts: AI flags low-margin items or pending payments (Udhaari) that require immediate attention.
+
+4. 💡 Hacks & Market Insights
+Stay ahead of the competition with localized knowledge.
+
+Daily AI Hacks: Generate fresh strategies for marketing, cost-saving, or customer loyalty.
+
+Market News: Curated feeds of MSME-related regulations (GST updates) and local business news.
+
+5. 👤 Personalized Business Profile
+Personalizes every AI interaction by learning your business goals, target customer base, and location.
+
+🛠️ Tech Stack
+Frontend: React (Vite), Bootstrap 5, Lucide-React (Iconography).
+
+Charts: Recharts (Interactive SVG charting).
+
+AI Engine: Google Gemini 1.5 Flash (via @google/generative-ai).
+
+Backend: Node.js (Netlify Serverless Functions).
+
+Image Generation: Pollinations.ai API.
+
+Export: html-to-image for high-resolution ad downloads.
+
+🚀 Getting Started
+1. Prerequisites
+Node.js (v18+)
+
+Netlify CLI (npm install -g netlify-cli)
+
+Google Gemini API Key (from Google AI Studio)
+
+2. Installation
+Bash
+
+# Clone the repository
+git clone https://github.com/your-username/VyapaarMitra.git
+
+# Install dependencies in root and frontend
+npm install
+cd frontend && npm install
+3. Local Development
+Create a .env file in the root directory and add your key:
+
+Plaintext
+
+GEMINI_API_KEY=your_key_here
+Run the full-stack environment:
+
+Bash
+
+# From the root directory
+netlify dev
+Your app will be available at http://localhost:8888.
+
+🇮🇳 Why "Vyapaar Mitra"?
+Small business owners are the backbone of India, but they are often overwhelmed by "solo-preneurship". Vyapaar Mitra isn't just a tool; it's a digital partner that speaks their language, understands their struggles, and gives them the technology they need to scale from a local shop to a digital brand.
+
+Created by: Kshitij Patil
