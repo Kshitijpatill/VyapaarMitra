@@ -10,8 +10,9 @@ import {
   Layout,
   FileText,
   Languages,
-  CheckCircle2
-} from 'lucide-react';
+  CheckCircle2,
+  Sparkles
+} from 'lucide-react'; // Comprehensive icon imports for all sections
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -19,7 +20,7 @@ const Home = () => {
 
   return (
     <div className="home-wrapper">
-      {/* --- 1. HERO SECTION --- */}
+      {/* --- 1. HERO SECTION (Original Content Preserved) --- */}
       <div className="hero-section min-vh-100 d-flex flex-column align-items-center justify-content-center text-center px-3">
         <div className="hero-glow"></div>
         <div className="container z-1">
@@ -32,34 +33,53 @@ const Home = () => {
             strategies, business hacks, and automated growth technology.
           </p>
           <div className="d-flex gap-3 justify-content-center flex-wrap">
-            <button className="btn btn-red rounded-pill d-flex align-items-center gap-2" onClick={() => navigate('/agent')}>
+            <button 
+              className="btn btn-red rounded-pill d-flex align-items-center gap-2 shadow" 
+              onClick={() => navigate('/agent')}
+            >
               <Rocket size={20} /> Try Demo Agent
             </button>
-            <button className="btn btn-outline-dark rounded-pill d-flex align-items-center gap-2" onClick={() => navigate('/tips')}>
+            <button 
+              className="btn btn-outline-dark rounded-pill d-flex align-items-center gap-2 shadow-sm" 
+              onClick={() => navigate('/tips')}
+            >
               <Lightbulb size={20} /> Business Hacks & Tips
             </button>
           </div>
         </div>
       </div>
 
-      {/* --- 2. WHAT IT IS: BUSINESS CHAT SCENARIO --- */}
+      {/* --- 2. WHAT IT IS: CURATED BUSINESS SCENARIO --- */}
       <section className="py-5 bg-white border-top">
         <div className="container py-lg-5">
           <div className="row align-items-center g-5">
             <div className="col-lg-6">
-              {/* Responsive Chat Interface */}
-              <div className="p-3 p-md-4 bg-dark rounded-5 shadow-lg position-relative overflow-hidden chat-container" style={{ minHeight: '320px' }}>
-                <div className="d-flex flex-column gap-3 mt-2">
-                  <div className="chat-bubble user-bubble align-self-end shadow-sm">
+              {/* Responsive Chat Interface with Modern Styling */}
+              <div className="p-3 p-md-5 bg-dark rounded-5 shadow-lg position-relative overflow-hidden chat-container" style={{ minHeight: '350px' }}>
+                <div className="d-flex flex-column gap-4 mt-2 opacity-50">
+                  {/* User Message */}
+                  <div className="chat-bubble user-bubble align-self-end shadow-sm fw-medium">
                     Write a polite payment reminder for Rahul for ₹5000.
                   </div>
+
+                  {/* Mitra AI Agent Message */}
                   <div className="chat-bubble agent-bubble align-self-start shadow-sm">
-                    "Namaste Rahul ji, hope you are well. Just a gentle reminder for the pending payment of ₹5000. Dhanyawad!"
+                    <div className="d-flex align-items-center gap-2 mb-1">
+                      <Sparkles size={14} className="text-danger" />
+                      <span className="small fw-bold text-danger text-uppercase" style={{ letterSpacing: '1px' }}>Mitra AI</span>
+                    </div>
+                    <p className="mb-0 fw-medium">
+                      "Namaste Rahul ji, hope you are well. Just a gentle reminder for the pending payment of ₹5000. Dhanyawad!"
+                    </p>
                   </div>
-                  <div className="chat-bubble user-bubble align-self-end shadow-sm">
+
+                  {/* Follow-up User Message */}
+                  <div className="chat-bubble user-bubble align-self-end shadow-sm fw-medium">
                     Perfect! Now make a Diwali sale post for my shop.
                   </div>
                 </div>
+                
+                {/* Visual Accent for Desktop */}
                 <div className="position-absolute top-50 start-50 translate-middle d-none d-md-block">
                    <div className="bg-white rounded-circle p-3 shadow-lg pulse">
                       <MessageSquare className="text-danger" size={32} />
@@ -67,11 +87,12 @@ const Home = () => {
                 </div>
               </div>
             </div>
+            
             <div className="col-lg-6 px-4">
               <h2 className="fw-bold mb-4 display-5">Your AI <span className="text-danger">Business Partner</span></h2>
               <p className="text-muted fs-5 lh-lg">
                 Vyapaar Mitra isn't just a chatbot; it's a dedicated assistant that understands <strong>Hinglish</strong>. 
-                From drafting professional WhatsApp messages to handling angry customers, it speaks your language and solves your daily business headaches.
+                From drafting professional WhatsApp messages to analyzing sales trends, it speaks your language and solves your daily business headaches.
               </p>
               <ul className="list-unstyled mt-4">
                 <li className="d-flex align-items-center gap-2 mb-2 text-dark fw-medium"><CheckCircle2 className="text-success" size={18}/> Voice commands in Hinglish</li>
@@ -83,10 +104,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- 3. ACTUAL FEATURES SECTION --- */}
+      {/* --- 3. PROJECT FEATURES SECTION --- */}
       <section className="py-5" style={{ backgroundColor: '#fdf5d7' }}>
         <div className="container py-5">
-          <h2 className="text-danger fw-bold mb-5 display-4">Powerful Features</h2>
+          <h2 className="text-danger fw-bold mb-5 display-4 text-center text-md-start">Powerful Features</h2>
           <div className="row g-4">
             {/* Feature 1: AI Agent */}
             <div className="col-md-4">
@@ -127,7 +148,7 @@ const Home = () => {
                 <div className="card-body p-4">
                   <h4 className="fw-bold mb-3">Document Analytics</h4>
                   <p className="text-muted mb-0">
-                    Simply upload a photo of your sales register or bills. Our AI extracts data to show you real-time revenue trends and growth.
+                    Simply upload a photo of your sales register or bills. Our AI extracts data to show you real-time revenue trends and growth insights.
                   </p>
                 </div>
               </div>
@@ -136,7 +157,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- 4. CURATED BENEFITS SECTION --- */}
+      {/* --- 4. PROJECT BENEFITS SECTION --- */}
       <section className="py-5 bg-white">
         <div className="container py-5">
           <h2 className="text-danger fw-bold mb-5 display-4 text-center">Why Choose Us?</h2>
@@ -144,8 +165,8 @@ const Home = () => {
             {[
               { icon: Zap, label: "Save 2+ Hours Daily", desc: "Automate manual typing & planning." },
               { icon: Rocket, label: "Professional Branding", desc: "Compete with big brands using AI Ads." },
-              { icon: TrendingUp, label: "Financial Clarity", desc: "Never lose track of your udhaari/sales." },
-              { icon: Languages, label: "Hinglish Support", desc: "No complex English required." }
+              { icon: TrendingUp, label: "Financial Clarity", desc: "Never lose track of your udhaari or daily sales." },
+              { icon: Languages, label: "Hinglish Support", desc: "No complex English or technical skills required." }
             ].map((b, i) => (
               <div key={i} className="col-sm-6 col-lg-3">
                 <div className="p-4 rounded-4 h-100 d-flex flex-column align-items-center gap-3 shadow-sm hover-shadow transition-all" style={{ backgroundColor: '#fdfcf0', border: '1px solid #f1f5f9' }}>
@@ -159,12 +180,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- 5. FINAL CTA --- */}
+      {/* --- 5. FINAL CALL TO ACTION --- */}
       <section className="py-5 text-center bg-dark text-white">
         <div className="container py-5">
            <h2 className="fw-bold mb-4 display-6">Ready to Scale Your Vyapaar?</h2>
            <p className="text-secondary mb-5 fs-5">Join the next generation of smart Indian business owners.</p>
-           <button className="btn btn-red rounded-pill px-5 py-3 fw-bold fs-5 shadow pulse" onClick={() => navigate('/agent')}>
+           <button 
+              className="btn btn-red rounded-pill px-5 py-3 fw-bold fs-5 shadow pulse" 
+              onClick={() => navigate('/agent')}
+            >
               Get Started for Free
            </button>
         </div>
