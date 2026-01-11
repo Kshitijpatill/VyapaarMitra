@@ -130,3 +130,26 @@ body {
   color: var(--accent-red);
   transform: translateY(-2px);
 }
+
+/* Helper for the hover effects on cards and benefits */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12) !important;
+  border-color: var(--accent-red) !important;
+}
+
+/* Enhancing the responsive typography */
+.lh-lg {
+  line-height: 1.8 !important;
+}
+
+/* Mobile-first adjustments for the Benefits grid */
+@media (max-width: 768px) {
+  .col-6 h5 {
+    font-size: 1rem;
+  }
+}
