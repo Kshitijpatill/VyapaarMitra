@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+:root {
+  --bg-main: #fdf5d7;      /* Warm cream background */
+  --bg-card: #ffffff;      /* Clean white for cards */
+  --text-main: #1a1d21;    /* Deep charcoal text */
+  --text-muted: #4b5563;   /* Muted gray for subtitles */
+  --accent-red: #e11d48;   /* Vibrant brand red */
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Updated Hero Section for Light Theme */
+.hero-section {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.accent-text {
+  color: var(--accent-red);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  max-width: 750px;
+  color: var(--text-muted);
+  margin: 0 auto 3rem auto;
+}
+
+/* Standardized Buttons for the New Scheme */
+.btn-red {
+  background-color: var(--accent-red);
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 12px 32px;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: opacity 0.2s ease;
+}
+
+.btn-red:hover {
+  background-color: var(--accent-red);
+  opacity: 0.8;
+  color: white;
+}
+
+.btn-outline-dark {
+  border: 1px solid var(--text-main);
+  color: var(--text-main);
+  padding: 12px 32px;
+  background: transparent;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--text-main);
+  color: var(--bg-main);
+}
+
+
+.pulse {
+  animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+}
+
+
+/* Container for horizontal scrolling if needed */
+.prompt-scroll-container {
+  display: flex;
+  flex-wrap: wrap;       /* Allows chips to wrap to the next line if needed */
+  gap: 12px;            /* Spacing between chips */
+  padding: 10px 0;
+  width: 100%;/* Hide scrollbar Firefox */
+}
+
+.prompt-scroll-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+/* Individual Quick Action Chips */
+.prompt-chip {
+  white-space: nowrap;
+  background: #ffffff;
+  border: 1px solid #dee2e6; /* Light gray border from reference */
+  border-radius: 50px;       /* Fully rounded corners */
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  color: #495057;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+/* Blue icon styling to match reference */
+.prompt-chip i {
+  color: var(--accent-red); /* Primary blue color */
+  font-size: 1.1rem;
+}
+
+.prompt-chip:hover {
+  background-color: #f8f9fa;
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+  transform: translateY(-2px);
+}

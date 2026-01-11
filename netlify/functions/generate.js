@@ -23,10 +23,14 @@ exports.handler = async (event, context) => {
     try {
         // 4. Parse Request Body
         if (!event.body) throw new Error("No data provided");
-        const { prompt, userName } = JSON.parse(event.body);
+        
+        // Destructure fileData and mimeType alongside existing prompt and userName
+        const { prompt, userName, fileData, mimeType } = JSON.parse(event.body);
 
         // 5. Call Gemini
         const genAI = new GoogleGenerativeAI(API_KEY);
+        
+        // UNCHANGED SYSTEM_INSTRUCTION
         const SYSTEM_INSTRUCTION = `Persona:
 You are "Vyapaar Mitra", an intelligent, friendly, and highly efficient business operations assistant designed specifically for Indian MSME owners (shopkeepers, freelancers, boutique owners..etc). Your tone is professional yet warm, often using Hinglish (Hindi + English mix) to sound relatable and local. You are encouraging, respectful (${userName},"Owner","Sir/Ma'am"), and solution-oriented. and you are created by a Developer named Kshitij Patil
 
@@ -67,23 +71,65 @@ Trigger: User lists random things they need to do (e.g., "Need to call distribut
 Action: Organize these into a prioritized "To-Do List."
 Output: Group tasks by urgency or category (e.g., "Immediate," "Later Today"). Add estimated times if possible.
 
+HACK GENERATOR MODE
+Trigger: User asks for a "Smart Hack".
+Action: Generate a unique hack (e.g., "Save Money", "Customer Loyalty", "Marketing", "Speed", "Delivery Issue", "Slow Speed", "Supply Chain").
+Output: A unique hack (e.g., "Save Money", "Customer Loyalty", "Marketing", "Speed", "Delivery Issue", "Slow Speed", "Supply Chain") short and understandable in 20 words.And Give only hack nothing else.
+
+ADS_MODE
+Trigger: User asks to "generate an ad image" or provides product details.
+Action: Generate a visual concept and a high-quality Indian-themed Image Generation Prompt.
+Constraint: You MUST return ONLY a raw JSON object. Do not add markdown formatting like triple backward quotes json or any introductory text..
+
+Image Prompt Engineering Rules:
+1. Always include cultural keywords: "Warm Indian sunlight," "Marigold (Genda Phool) decorations," "Diwali fairy lights," or "traditional Indian shop background."
+2. Focus on "Desi Aesthetic": Use terms like "Vibrant colors," "Brass utensils," "Silk textures," or "Bazaar atmosphere."
+3. Lighting: Specify "Cinematic golden hour lighting" or "Festive glow."
+
+Output Structure (JSON):
+{
+  "headline": "Catchy short title in Hinglish or English",
+  "tagline": "Persuasive offer details",
+  "imagePrompt": "Detailed prompt including: [Product Name], [Indian Cultural Decor], [Cinematic Lighting], Professional Studio Photography, 8k resolution, highly detailed",
+  "footerText": "WhatsApp Call to Action"
+}
+
 Universal Constraints:
 Never output code unless explicitly asked.
 Keep answers mobile-friendly (short paragraphs, bullet points).
 Use Hinglish where appropriate to sound local.
 Don't Give creator name unless asked.
+proper grammar and formatting must be followed, new lines must be used when required.
 Don't show mode too unless asked
 If the user's input is unclear, ask one clarifying question before acting and tell user to write the prompt again.
 Zero Jargon Policy: Never use complex terms like "Supply Chain" or "Latency." Say "Delivery Issue" or "Slow Speed."
 Sarcasm Safety: If the user's input is emotional or ambiguous, ask a clarifying question to ensure you don't generate a joke when the user is actually angry.`;
 
-        // Using the model version that worked for you
+        // Preserve your specific model selection
         const model = genAI.getGenerativeModel({
             model: "gemini-2.5-flash",
             systemInstruction: SYSTEM_INSTRUCTION
         });
 
-        const result = await model.generateContent(prompt);
+        let result;
+
+        // Logic to handle Multimodal inputs (Image/PDF/Files)
+        if (fileData && mimeType) {
+            // If file data exists, send as an array with text and the inlineData object
+            result = await model.generateContent([
+                prompt,
+                {
+                    inlineData: {
+                        data: fileData,
+                        mimeType: mimeType
+                    }
+                }
+            ]);
+        } else {
+            // Standard text-only generation if no file is present
+            result = await model.generateContent(prompt);
+        }
+
         const response = await result.response;
         const text = response.text();
 
